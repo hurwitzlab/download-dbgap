@@ -24,7 +24,10 @@ cd $DIR
 
 vdb-config --import prj_9499.ngc ./ &>$WD/pbs_logs/dbgap_download.log
 
-prefetch -t ascp -a '/home/u18/scottdaniel/bin/ascp|/home/u18/scottdaniel/etc/asperaweb_id_dsa.openssh' \
-    --max-size 1T cart_prj9499_201708251742.krt \
+#prefetch -t ascp -a '/home/u18/scottdaniel/bin/ascp|/home/u18/scottdaniel/etc/asperaweb_id_dsa.openssh' \
+#    --max-size 1T cart_prj9499_201708251742.krt \
+#    &>>$WD/pbs_logs/dbgap_download.log
+
+prefetch --max-size 1T cart_prj9499_201708251742.krt \
     &>>$WD/pbs_logs/dbgap_download.log
 
