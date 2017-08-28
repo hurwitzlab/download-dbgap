@@ -4,7 +4,7 @@
 
 #PBS -W group_list=bhurwitz
 #PBS -q standard
-#PBS -l select=1:ncpus=2:mem=3gb
+#PBS -l select=1:ncpus=6:mem=36gb:pcmem=6gb
 #PBS -l walltime=72:00:00
 #PBS -l cput=72:00:00
 #PBS -M scottdaniel@email.arizona.edu
@@ -26,8 +26,17 @@ cd $DIR
 echo $(date) >> $WD/pbs_logs/"$PBS_JOBNAME".log
 
 #check that all files are decrypted
-vdb-decrypt ./*.sra &>>$WD/pbs_logs/"$PBS_JOBNAME".log
+arr=(./*)
+
+for f in "${arr[@]}"; do
+    echo "$f"
+    vdb-decrypt ./$f &>>$WD/pbs_logs/"$PBS_JOBNAME".log
+done
 
 #get the fastq for all the sra files
-fastq-dump ./*.sra &>>$WD/pbs_logs/"$PBS_JOBNAME".log
+#getting unaligned because we want a look at bacterial first
+#aligned is to the human GRCh37 reference genome
+#https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR1592383
+
+fastq-dump --unaligned ./*.sra &>>$WD/pbs_logs/"$PBS_JOBNAME".log
 
