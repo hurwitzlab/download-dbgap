@@ -10,6 +10,12 @@
 #PBS -o pbs_logs/
 #PBS -e pbs_logs/
 
+#encryption key, change to whatever yours is
+export KEY="prj_9499.ngc"
+
+#cart downloaded from dbgap "run browser" container list of files to download
+export CART="cart_prj9499_201708251742.krt"
+
 export WD=$PBS_O_WORKDIR
 
 export DIR="/rsgrps/bhurwitz/hurwitzlab/data/raw/Doetschman_20111007/human"
@@ -22,12 +28,8 @@ cd $DIR
 
 #Downloading phs000790 - Comparative Sequence Analysis Between Primary and Metastatic Colorectal Cancer Lesions
 
-vdb-config --import prj_9499.ngc ./ &>$WD/pbs_logs/dbgap_download.log
+vdb-config --import $KEY ./ &>$WD/pbs_logs/dbgap_download.log
 
-#prefetch -t ascp -a '/home/u18/scottdaniel/bin/ascp|/home/u18/scottdaniel/etc/asperaweb_id_dsa.openssh' \
-#    --max-size 1T cart_prj9499_201708251742.krt \
-#    &>>$WD/pbs_logs/dbgap_download.log
-
-prefetch --max-size 1T cart_prj9499_201708251742.krt \
+prefetch --max-size 1T $CART \
     &>>$WD/pbs_logs/dbgap_download.log
 
