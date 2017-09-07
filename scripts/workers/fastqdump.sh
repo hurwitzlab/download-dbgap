@@ -22,6 +22,8 @@ else
   exit 1
 fi
 
+cd $SRA_DIR
+
 TMP_FILES=$(mktemp)
 
 get_lines $TODO $TMP_FILES $PBS_ARRAY_INDEX $STEP_SIZE
@@ -40,7 +42,6 @@ fi
 #aligned is to the human GRCh37 reference genome
 #https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR1592383
 
-cd $SRA_DIR
 
 for NAME in $(cat $TMP_FILES); do     
     echo Working on $NAME
