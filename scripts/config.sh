@@ -1,7 +1,7 @@
 export CWD=$PWD
 export SCRIPT_DIR=$CWD
 #root project dir
-export PRJ_DIR="/rsgrps/bhurwitz/scottdaniel/fastq-taxoner-patric"
+export PRJ_DIR="/rsgrps/bhurwitz/scottdaniel/download-dbgap"
 #where the worker scripts are (PBS batch scripts and their python/perl workdogs)
 export WORKER_DIR="$SCRIPT_DIR/workers"
 
