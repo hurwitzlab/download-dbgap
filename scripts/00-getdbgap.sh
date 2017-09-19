@@ -7,8 +7,8 @@
 #PBS -l cput=72:00:00
 #PBS -M scottdaniel@email.arizona.edu
 #PBS -m ea
+#PBS -j oe
 #PBS -o out/
-#PBS -e out/
 
 #encryption key, change to whatever yours is
 export KEY="prj_9499.ngc"
