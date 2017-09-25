@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #PBS -W group_list=bhurwitz
 #PBS -q standard

@@ -1,43 +1,52 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-#Decrypting and fastq dumping phs000790 - Comparative Sequence Analysis Between Primary and Metastatic Colorectal Cancer Lesions
+#Decrypting and fastq dumping phs000374 
 
-#PBS -W group_list=bhurwitz
-#PBS -q standard
-#PBS -l select=1:ncpus=6:mem=36gb:pcmem=6gb
-#PBS -l walltime=72:00:00
-#PBS -l cput=72:00:00
-#PBS -M scottdaniel@email.arizona.edu
-#PBS -m ea
-#PBS -o pbs_logs/
-#PBS -e pbs_logs/
+set -u
+source ./config.sh
+export CWD="$PWD"
+export STEP_SIZE=2
 
-export WD=$PBS_O_WORKDIR
+PROG=`basename $0 ".sh"`
+STDOUT_DIR="$CWD/out/$PROG"
 
-export DIR="/rsgrps/bhurwitz/hurwitzlab/data/raw/Doetschman_20111007/human/sra"
-
-if [ ! -d "$DIR" ]; then
-    echo "Wrong directory dude!"
-    exit 1
-fi
-
-cd $DIR
-
-echo $(date) >> $WD/pbs_logs/"$PBS_JOBNAME".log
+init_dir "$STDOUT_DIR" 
 
 #check that all files are decrypted
-arr=(./*)
-
-for f in "${arr[@]}"; do
-    echo "$f"
-    vdb-decrypt ./$f &>>$WD/pbs_logs/"$PBS_JOBNAME".log
-done
-
 #get the fastq for all the sra files
-#getting unaligned because we want a look at bacterial first
-#aligned is to the human GRCh37 reference genome
-#https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR1592383
+#were ok with human alignment because
+#centrifuge will sort it all out
 
-fastq-dump -W --gzip --split-files --unaligned ./*.sra &>>$WD/pbs_logs/"$PBS_JOBNAME".log
+cd $SRA_DIR
 
-#-W clips adapters (supposedly), --gzip keep compressed to save space, --split-files split into Read1 and Read2 since these are supposed to be paired end and the interleaved file didn't look like it, --unaligned because we want bacteria
+export LIST="sra_file_list"
+
+find ./ -iname "*.sra" > $LIST
+
+export TODO="files_todo"
+
+if [ -e $TODO ]; then
+    rm $TODO
+fi
+
+while read SRA; do
+    
+    if [ ! -e $(basename $SRA .sra)_1.fastq.gz ]; then
+        echo $SRA >> $TODO
+    fi
+
+done < $LIST
+
+NUM_FILES=$(lc $TODO)
+
+echo Found \"$NUM_FILES\" files in \"$SRA_DIR\" to work on
+
+JOB=$(qsub -J 1-$NUM_FILES:$STEP_SIZE -V -N fastqdump -j oe -o "$STDOUT_DIR" $WORKER_DIR/decrypt_n_dump.sh)
+
+if [ $? -eq 0 ]; then
+  echo "Submitted job \"$JOB\" for you in steps of \"$STEP_SIZE.\"
+  Naeser's Law: You can make it foolproof, but you can't make it damnfoolproof."
+else
+  echo -e "\nError submitting job\n$JOB\n"
+fi
+
