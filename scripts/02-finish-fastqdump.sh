@@ -13,8 +13,8 @@ STDOUT_DIR="$CWD/out/$PROG"
 init_dir "$STDOUT_DIR" 
 
 #get the fastq for all the sra files
-#getting unaligned because we want a look at bacterial first
-#aligned is to the human GRCh37 reference genome
+#were ok with human alignment because
+#centrifuge will sort it all out
 #https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR1592383
 
 cd $SRA_DIR

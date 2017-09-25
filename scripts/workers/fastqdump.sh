@@ -38,16 +38,10 @@ else
 fi
 
 #get the fastq for all the sra files
-#getting unaligned because we want a look at bacterial first
-#aligned is to the human GRCh37 reference genome
-#https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR1592383
-
 
 for NAME in $(cat $TMP_FILES); do     
     echo Working on $NAME
-    if [ ! -e $(basename $NAME .sra)_1.fastq.gz ]; then
-        fastq-dump -W --gzip --split-files --unaligned $NAME
-    fi
+    fastq-dump -W -F --gzip --split-files $NAME
 done
 #-W clips adapters (supposedly), --gzip keep compressed to save space, --split-files split into Read1 and Read2 since these are supposed to be paired end and the interleaved file didn't look like it, --unaligned because we want bacteria
 
