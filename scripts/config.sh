@@ -9,10 +9,10 @@ export WORKER_DIR="$SCRIPT_DIR/workers"
 export KEY="prj_9499.ngc"
 
 #cart downloaded from dbgap "run browser" container list of files to download
-export CART="cart_prj9499_phs000374.krt"
+export CART="cart_prj9499_phs000790.krt"
 
 #main download / working directory
-export SRA_DIR="/rsgrps/bhurwitz/hurwitzlab/data/raw/Doetschman_20111007/human/phs000374"
+export SRA_DIR="/rsgrps/bhurwitz/hurwitzlab/data/raw/Doetschman_20111007/human/phs000790"
 # --------------------------------------------------
 function init_dir {
     for dir in $*; do
