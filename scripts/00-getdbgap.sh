@@ -9,22 +9,13 @@
 #PBS -m ea
 #PBS -j oe
 #PBS -o out/
-
-#encryption key, change to whatever yours is
-export KEY="prj_9499.ngc"
-
-#cart downloaded from dbgap "run browser" container list of files to download
-export CART="cart_prj9499_201709191342.krt"
-
 export WD=$PBS_O_WORKDIR
 
-export DIR="/rsgrps/bhurwitz/hurwitzlab/data/raw/Doetschman_20111007/human"
-
-if [ ! -d "$DIR" ]; then
-    mkdir -p $DIR
+if [ ! -d "$SRA_DIR" ]; then
+    mkdir -p $SRA_DIR
 fi
 
-cd $DIR
+cd $SRA_DIR
 
 #Downloading phs000374 - Genomic Sequencing of Colorectal Adenocarcinomas 
 
