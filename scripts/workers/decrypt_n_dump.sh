@@ -42,7 +42,7 @@ fi
 for NAME in $(cat $TMP_FILES); do     
     echo Working on $NAME
     vdb-decrypt $NAME 
-    fastq-dump -W -I -F --split-3 --gzip $NAME
+    fastq-dump -W -I --split-3 --gzip $NAME
 done
 #-W clips adapters (supposedly), --gzip keep compressed to save space, 
 #--split-3                        Legacy 3-file splitting for mate-pairs:
@@ -53,7 +53,6 @@ done
 #                                   reads and above are ignored.
 #  -I|--readids                     Append read id after spot id as
 #                                   'accession.spot.readid' on defline
-#  -F|--origfmt                     Defline contains only original sequence name
 
 
 #Usage:
