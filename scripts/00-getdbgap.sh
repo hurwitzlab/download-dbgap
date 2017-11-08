@@ -9,7 +9,19 @@
 #PBS -m ea
 #PBS -j oe
 #PBS -o out/
+
+set -x
+
 export WD=$PBS_O_WORKDIR
+
+cd $WD
+
+if [ -e config.sh ]; then
+    source config.sh
+else
+    echo "config file missing"
+    exit 1
+fi
 
 if [ ! -d "$SRA_DIR" ]; then
     mkdir -p $SRA_DIR

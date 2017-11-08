@@ -41,7 +41,7 @@ fi
 
 for NAME in $(cat $TMP_FILES); do     
     echo Working on $NAME
-    fastq-dump -W -I --split-3 --gzip $NAME
+    fastq-dump --unaligned -W -I --split-3 --gzip $NAME
 done
 #-W clips adapters (supposedly), --gzip keep compressed to save space, --split-files split into Read1 and Read2 since these are supposed to be paired end and the interleaved file didn't look like it, --unaligned because we want bacteria
 
