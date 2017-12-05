@@ -12,7 +12,7 @@ export KEY="prj_9499.ngc"
 export CART="cart_prj9499_phs000790.krt"
 
 #main download / working directory
-export SRA_DIR="/rsgrps/bhurwitz/hurwitzlab/data/raw/Doetschman_20111007/human/phs000790"
+export SRA_DIR="/rsgrps/bhurwitz/hurwitzlab/data/controlled_access/dbgap/phs000790"
 # --------------------------------------------------
 function init_dir {
     for dir in $*; do
